@@ -34,26 +34,27 @@ export default class WelcomeScreen extends React.Component {
   }
 
   userSignUp = (emailId, password, confirmPassword) => {
-    if(password!==confirmPassword){
+    if (password !== confirmPassword) {
       return Alert.alert('Password and Confirm Password dont atch. \n Please check again')
-    }else{
-    firebase.auth().createUserWithEmailAndPassword(emailId, password).then(() => {
-      db.collection('Users').add({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        emailID: this.state.emailID,
-        password: this.state.password,
-        phoneNumber: this.state.phoneNumber,
-        confirmPassword: this.state.confirmPassword,
-        address: this.state.address
+    } else {
+      firebase.auth().createUserWithEmailAndPassword(emailId, password).then(() => {
+        db.collection('Users').add({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          emailID: this.state.emailID,
+          password: this.state.password,
+          phoneNumber: this.state.phoneNumber,
+          confirmPassword: this.state.confirmPassword,
+          address: this.state.address
+        })
+        return Alert.alert("Hey" + this.state.firstName + "You Have successfully signed up!")
+      }
+      ).catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        return Alert.alert(errorMessage);
       })
-      return Alert.alert("Hey"+this.state.firstName+"You Have successfully signed up!")
     }
-    ).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      return Alert.alert(errorMessage);
-    })}
   }
 
   showModal = () => {
@@ -62,26 +63,26 @@ export default class WelcomeScreen extends React.Component {
         animationType="fade"
         visible={this.state.isModaVisible}
         transparent={true}>
-        <View style = {{width: 300}}>
+        <View style={{ width: 300 }}>
           <ScrollView>
             <KeyboardAvoidingView>
               <Text>Sign Up</Text>
               <TextInput
-            style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="First Name"
                 maxLength={10}
                 onChangeText={(text) => {
                   this.setState({ firstName: text })
                 }} />
               <TextInput
-              style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="Last Name"
                 maxLength={10}
                 onChangeText={(text) => {
                   this.setState({ lastName: text })
                 }} />
               <TextInput
-              style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="Phone Number"
                 keyboardType={'numeric'}
                 maxLength={10}
@@ -89,21 +90,21 @@ export default class WelcomeScreen extends React.Component {
                   this.setState({ phoneNumber: text })
                 }} />
               <TextInput
-              style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="emailID"
                 keyboardType={'email-address'}
                 onChangeText={(text) => {
                   this.setState({ emailID: text })
                 }} />
               <TextInput
-              style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="Address"
                 multiline={true}
                 onChangeText={(text) => {
                   this.setState({ address: text })
                 }} />
               <TextInput
-              style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="Password"
                 secureTextEntry={true}
                 maxLength={10}
@@ -111,17 +112,17 @@ export default class WelcomeScreen extends React.Component {
                   this.setState({ password: text })
                 }} />
               <TextInput
-              style={{ width: '100%', height: 30, marginTop: 30, marginBottom: 30 }}
+                style={styles.formTextInput}
                 placeholder="Confirm Password"
                 secureTextEntry={true}
                 maxLength={10}
                 onChangeText={(text) => {
                   this.setState({ confirmPassword: text })
                 }} />
-                <View>
-              <TouchableOpacity style={{ width: 100, height: 20, alignItems: 'center', alignSelf: 'center', marginTop: 30 }} onPress={this.userSignUp(this.state.emailID, this.state.password, this.state.confirmPassword)}><Text>Sign Up</Text></TouchableOpacity></View>
-              <View><TouchableOpacity style={{ width: 100, height: 20, alignItems: 'center', alignSelf: 'center', marginTop: 30 }} onPress = {()=>{
-                this.setState({isModaVisible: false})
+              <View>
+                <TouchableOpacity style={{ width: 100, height: 20, alignItems: 'center', alignSelf: 'center', marginTop: 30 }} onPress={this.userSignUp(this.state.emailID, this.state.password, this.state.confirmPassword)}><Text>Sign Up</Text></TouchableOpacity></View>
+              <View><TouchableOpacity style={{ width: 100, height: 20, alignItems: 'center', alignSelf: 'center', marginTop: 30 }} onPress={() => {
+                this.setState({ isModaVisible: false })
               }}><Text>Cancel</Text></TouchableOpacity></View>
             </KeyboardAvoidingView>
           </ScrollView>
@@ -136,7 +137,7 @@ export default class WelcomeScreen extends React.Component {
         <View>
           <Text style={{ fontFamily: 'cursive', fontSize: 25, textAlign: 'center', marginTop: 20, marginBottom: 10 }}>Welcome to the Barter App!!!</Text>
         </View>
-          {this.showModal()}
+        {this.showModal()}
         <View>
           <TextInput
             style={{ width: '50%', height: 35, marginTop: -750, alignSelf: 'center', alignItems: 'center' }}
@@ -147,9 +148,9 @@ export default class WelcomeScreen extends React.Component {
             }}
           />
           <TextInput
-            style={{ width: '50%', height: 35, marginTop: 30, alignSelf: 'center', alignItems: 'center'}}
-            placeholder = "Password"
-            secureTextEntry = {true}
+            style={{ width: '50%', height: 35, marginTop: 30, alignSelf: 'center', alignItems: 'center' }}
+            placeholder="Password"
+            secureTextEntry={true}
             secureTextEntry={true}
             onChangeText={(text) => {
               this.setState({ password: text });
@@ -162,13 +163,26 @@ export default class WelcomeScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={{ width: 100, height: 20, alignItems: 'center', alignSelf: 'center', marginTop: 30 }}
-            onPress={()=>{
-              this.setState({isModaVisible: true})
+            onPress={() => {
+              this.setState({ isModaVisible: true })
             }}>
-            <Text style={{ fontSize: 20, fontFamily: 'bold' }}>SignUp</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>SignUp</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  formTextInput:{
+    width:"75%",
+    height:35,
+    alignSelf:'center',
+    borderColor:'#ffab91',
+    borderRadius:10,
+    borderWidth:1,
+    marginTop:20,
+    padding:10
+  }
+})
