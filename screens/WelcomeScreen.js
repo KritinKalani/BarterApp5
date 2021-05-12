@@ -112,7 +112,7 @@ export default class WelcomeScreen extends React.Component {
                   this.setState({ password: text })
                 }} />
               <TextInput
-                style={styles.formTextInput}
+                style={styles.formTextInput}œ
                 placeholder="Confirm Password"
                 secureTextEntry={true}
                 maxLength={10}

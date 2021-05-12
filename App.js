@@ -4,6 +4,7 @@ import WelcomeScreen from './screens/WelcomeScreen'
 import HomeScreen from './screens/HomeScreen'
 import ExchangeScreen from './screens/ExchangeScreen'
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
+import {AppDrawerNavigator} from './components/AppDrawerNavigator';
 import {TabNavigator} from './components/AppTabNavigator'
 
 export default class App extends React.Component{
@@ -17,7 +18,8 @@ export default class App extends React.Component{
 
 const switchNavigator = createSwitchNavigator({
   WelcomeScreen: {screen: WelcomeScreen},
-  BottomTabNavigator: {screen: TabNavigator}
+  AppDrawerNavigator: {screen: AppDrawerNavigator},
+  TabNavigator: {screen: TabNavigator}
 })
 
 const AppContainer = createAppContainer(switchNavigator)
